@@ -25,39 +25,46 @@ public class MainActivity extends AppCompatActivity {
         mBtnAlertDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Thực đơn");
-                builder.setIcon(R.mipmap.ic_launcher);
-                builder.setCancelable(false);
 
 
-                String[] arrayFood = {"Gà","Mỳ Ý","Nước ngọt","Salad"};
+            }
+        });
+    }
 
-                boolean[] arrayChecked = new boolean[arrayFood.length];
+    private void openAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Thực đơn");
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setCancelable(false);
 
-                builder.setMultiChoiceItems(arrayFood, arrayChecked, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
 
+        String[] arrayFood = {"Gà","Mỳ Ý","Nước ngọt","Salad"};
+
+        boolean[] arrayChecked = new boolean[arrayFood.length];
+
+        builder.setMultiChoiceItems(arrayFood, arrayChecked, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+
+            }
+        });
+
+        // Positive button (tích cực như đồng ý hoặ có)
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int y = 0; y < arrayChecked.length; y++) {
+                    if(arrayChecked[y]){
+                        stringBuilder.append(arrayFood[y] + ", ");
                     }
-                });
+                }
+                stringBuilder.delete(stringBuilder.length() - 2 , stringBuilder.length() - 1);
+                Toast.makeText(MainActivity.this, "Order của bạn là " +stringBuilder.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
-                // Positive button (tích cực như đồng ý hoặ có)
-                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for (int y = 0; y < arrayChecked.length; y++) {
-                            if(arrayChecked[y]){
-                                stringBuilder.append(arrayFood[y] + ", ");
-                            }
-                        }
-                        stringBuilder.delete(stringBuilder.length() - 2 , stringBuilder.length() - 1);
-                        Toast.makeText(MainActivity.this, "Order của bạn là " +stringBuilder.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                // Negative Button (tiêu cực như là hủy hoặc không đồng ý)
+        // Negative Button (tiêu cực như là hủy hoặc không đồng ý)
 //                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
 //                    @Override
 //                    public void onClick(DialogInterface dialogInterface, int i) {
@@ -74,16 +81,13 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                });
 
-                builder.show();
+        builder.show();
 
-                // Thực đơn
-                // Gà
-                // mỳ ý
-                // nước ngọt
-                // salad
-                // ...
-
-            }
-        });
+        // Thực đơn
+        // Gà
+        // mỳ ý
+        // nước ngọt
+        // salad
+        // ...
     }
 }
