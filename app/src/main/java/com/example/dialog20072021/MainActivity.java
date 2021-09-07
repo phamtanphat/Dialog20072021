@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     Button mBtnAlertDialog;
-
+    int mIndex = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,15 +25,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Thông báo");
-                builder.setMessage("Có phiên bản mới bạn có muốn cập nhật?");
+                builder.setTitle("Đường");
                 builder.setIcon(R.mipmap.ic_launcher);
+                builder.setCancelable(false);
+
+                String[] arraySugar = {"50%","60%","70%","80%","90%","100%"};
+
+                builder.setSingleChoiceItems(arraySugar, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mIndex = i;
+                    }
+                });
 
                 // Positive button (tích cực như đồng ý hoặ có)
                 builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(MainActivity.this, "Đồng ý cập nhật", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, arraySugar[mIndex], Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -41,17 +50,18 @@ public class MainActivity extends AppCompatActivity {
                 builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(MainActivity.this, "Hủy bỏ", Toast.LENGTH_SHORT).show();
+                        mIndex = -1;
+                        Toast.makeText(MainActivity.this, "Bạn chưa chọn", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-                // Neutral button (chưa xác định)
-                builder.setNeutralButton("Chưa xác định", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
+//
+//                // Neutral button (chưa xác định)
+//                builder.setNeutralButton("Chưa xác định", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                });
 
                 builder.show();
 
