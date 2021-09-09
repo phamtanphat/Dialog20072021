@@ -26,7 +26,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AppDialog.createDialogRating(MainActivity.this);
+                AppDialog.createDialogRating(MainActivity.this, new OnListenerRating() {
+                    @Override
+                    public void onRatingChanges(float stars) {
+                        Toast.makeText(MainActivity.this, "Bạn đánh giá " + stars + " sao", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
         });
