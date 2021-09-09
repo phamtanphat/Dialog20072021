@@ -8,14 +8,15 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RatingBar;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatRatingBar;
 
 public class AppDialog {
+    private static float star = -1f;
 
-
-    public static void createDialogRating(Context context){
+    public static void createDialogRating(Context context , OnListenerRating onListenerRating){
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_rating);
@@ -33,11 +34,19 @@ public class AppDialog {
         layoutParams.gravity = Gravity.CENTER;
 
         AppCompatRatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                star = v;
+            }
+        });
         AppCompatButton button = dialog.findViewById(R.id.buttonRateNow);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onListenerRating.onRatingChanges(star);
                 dialog.dismiss();
             }
         });
